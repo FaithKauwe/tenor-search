@@ -1,12 +1,7 @@
 // Require Libraries
 require('dotenv').config();
 const express = require('express');
-// Require tenorjs near the top of the file
-// const Tenor = require("tenorjs").client({
-//   "Key": "AIzaSyA9Z_gAZVB_-RW7n0PQ44G7mNZNkYJVEAI", 
-//   "Filter": "high",
-//   "Locale": "en_US"
-// });
+
 // App Setup
 const app = express();
 
