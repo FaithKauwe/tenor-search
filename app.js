@@ -1,6 +1,12 @@
 // Require Libraries
+require('dotenv').config();
 const express = require('express');
-
+// Require tenorjs near the top of the file
+// const Tenor = require("tenorjs").client({
+//   "Key": "AIzaSyA9Z_gAZVB_-RW7n0PQ44G7mNZNkYJVEAI", 
+//   "Filter": "high",
+//   "Locale": "en_US"
+// });
 // App Setup
 const app = express();
 
@@ -22,9 +28,32 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 // Routes
+// '/' is the root, home page
 app.get('/', (req, res) => {
-   console.log(req.query) // => "{ term: hey" }
-    res.render('home')
+  // Handle the home page when we haven't queried yet
+  let term = ""
+  if (req.query.term) {
+    term = req.query.term
+  }
+  
+  // Build the API URL
+  const apiKey = process.env.TENOR_API_KEY;
+  const url = `https://tenor.googleapis.com/v2/search?key=${apiKey}&q=${term}&limit=10&contentfilter=high`;
+  
+  // Make the API call using fetch
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+
+       
+      // The API returns results in data.results
+      const gifs = data.results || [];
+      res.render('home', { gifs })
+    })
+    .catch(error => {
+      console.error('Error fetching gifs:', error);
+      res.render('home', { gifs: [] })
+    });
 })
 app.get('/greetings/:name', (req, res) => {
   // grab the name from the path provided
