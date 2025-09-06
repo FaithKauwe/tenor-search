@@ -2,6 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 
+// App Setup
 const app = express();
 
 // Middleware
