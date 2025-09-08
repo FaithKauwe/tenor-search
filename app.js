@@ -5,6 +5,9 @@ const express = require('express');
 // App Setup
 const app = express();
 
+// tell Express that static files will live in 'public' folder
+app.use(express.static(__dirname + '/public'));
+
 // Middleware
 
 // Allow Express (our web framework) to render HTML templates and send them back to the client using a new function
@@ -35,7 +38,7 @@ app.get('/', (req, res) => {
   const apiKey = process.env.TENOR_API_KEY;
   const url = `https://tenor.googleapis.com/v2/search?key=${apiKey}&q=${term}&limit=10&contentfilter=high`;
   
-  // Make the API call using fetch
+  // Make the API call using fetch instead of the wrapper
   fetch(url)
     .then(response => response.json())
     .then(data => {
