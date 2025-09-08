@@ -6,6 +6,7 @@ const express = require('express');
 const app = express();
 
 // tell Express that static files will live in 'public' folder
+// had to use the more explicit __dirname, just 'public' wasn't working
 app.use(express.static(__dirname + '/public'));
 
 // Middleware
